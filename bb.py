@@ -6,7 +6,7 @@ def demo_re():
     p3 = re.compile('\d')
     print 1, p1.findall(str1)
     print 2, p2.findall(str1)
-    print 3, p3.findall(str1)
+    #print 3, p3.findall(str1)
 
     str2 = 'a@163.com ; b@gmail.com ; c@qq.com ; e0@163.com ; z@qq.com'
     p4 = re.compile('\w+@163\.com')
