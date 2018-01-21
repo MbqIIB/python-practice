@@ -5,7 +5,7 @@ def demo_string():
     print stra.replace('world','nowcoder')
     strb = '   \n\r hello nowcoder \r\n'
     print 11,strb.lstrip()
-    print 2,strb.rstrip()
+    print 22,strb.rstrip()
     strc = 'hello w'
     print 3,strc.startswith('hel')
     print 4,strc.endswith('x')
