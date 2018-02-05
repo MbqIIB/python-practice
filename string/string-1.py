@@ -22,9 +22,19 @@ def translator(frm = '',to = '',delete = '',keep = None):
     if keep is not None:
         allchars = string.maketrans('','')
         delete = allchars.translate(allchars,keep.translate(allchars,delete))
-    def translate(s):
+    def test(s):
         return s.translate(trans,delete)
-    return translate
+#    def translate(s):
+#       return s.translate(trans,delete)
+    return test
 
-translator(frm = 'wwed',to = 'e',keep ='a')
+digites_only = translator(keep = string.digits)
+q = digites_only("chris perkins:233-2346")
+
+
+digites_twice = translator(keep = string.digits)
+
+print  digites_only == digites_twice
+
+
 
