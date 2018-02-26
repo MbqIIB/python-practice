@@ -13,4 +13,3 @@ while i < 3:
         choice = input('>:')
         if choice == 'y' or choice == 'Y':
             i = 0
-            6

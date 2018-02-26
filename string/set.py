@@ -59,6 +59,9 @@ print iphone8 <= iphone7
 
 #是否相交,False代表相交
 print iphone7.isdisjoint(iphone8)
+<<<<<<< HEAD
 
 
 menu = {'a':1,'b':2,'c':3}
+=======
+>>>>>>> github/local
