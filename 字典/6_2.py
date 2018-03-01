@@ -42,6 +42,7 @@ menu = {
   '山东':{},
 }
 
+
 while True:
     for k in menu:
         print(k)
