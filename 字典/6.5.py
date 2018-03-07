@@ -68,7 +68,7 @@ while True:
         if len(layers) != 0:
             current_layer = layers.pop()
         else:
-            print('已经是顶层了!')
+            print('已经是顶层了')
 
 
 
