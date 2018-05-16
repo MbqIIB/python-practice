@@ -106,3 +106,18 @@ pip3 install PyTyrion
 Tyrion.Bottle(           Tyrion.Flask(            Tyrion.FrameworkFactory( Tyrion.Tornado(
 Tyrion.Django(           Tyrion.Framework         Tyrion.setup(
 
+
+
+使用国内源下载模块，豆瓣的源
+
+1.  pip3 install -i http://pypi.douban.com/simple/ paramiko ，不能正确安装是因为仓库所在地址不是受信任的地址
+caolingjun@panpandeMacBook-Pro ~$ pip3 install -i http://pypi.douban.com/simple/ paramiko
+Collecting paramiko
+  The repository located at pypi.douban.com is not a trusted or secure host and is being ignored. If this repository is available via HTTPS it is recommended to use HTTPS instead, otherwise you may silence this warning and allow it anyways with '--trusted-host pypi.douban.com'.
+  Could not find a version that satisfies the requirement paramiko (from versions: )
+No matching distribution found for paramiko
+You are using pip version 9.0.1, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+
+2.  pip3 install -i http://pypi.douban.com/simple/ paramiko --trusted-host pypi.douban.com
+以很快的速度安装好
