@@ -7,9 +7,23 @@
 # @Software: PyCharm
 
 
-# from proj import settings
-# def sayhi():
-#     print('hello world!')
+
+
+包（Package)
+当你的模块文件越来越多，就需要对模块文件进行划分，比如把负责和数据库交互的放一个文件夹，把与页面交互相关的放一个文件夹
+
+
+
+python3 manage.py  可以正常导入，但是python manage.py 执行却会报错
+Q:为啥python3可以正常运行，但是python2运行的时候却会报错
+A:crm本质上就是一个文件夹，并不是一个包。只是python3优化之后可以识别它，所以我们需要添加个文件__init__.py（空文件）
+  把这个文件夹初始化为一个包，这样在python2的环境下也可以正常运行。文件__init__.py是放在crm的路径下的
+  注：在pycharm里面，当一个文件夹变成一个包之后，它会在原来的文件图像中间加个洞
+##############################################################################################
+
+from proj import settings
+def sayhi():
+    print('hello world!')
 
 
 注意了，按照之前我们所说的，proj/settings.py和views不在一级目录下，即它不在views模块的当前路径下，也不在系统路径下，是不能直接导入的
