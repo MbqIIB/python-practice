@@ -35,6 +35,14 @@ if 'port' in conf["mysqld"]:
 
 
 
+caolingjun@panpandeMacBook-Pro ~/daily$ cat config_test.ini
+[group1]
+k1 = v1
+k2:v2
+
+[group2]
+k1 = v1
+
 #读配置文件
 conf.read("/Users/caolingjun/daily/config_test.ini")
 print(dir(conf))
