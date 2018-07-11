@@ -30,21 +30,21 @@
 
 
 3). 在 views 内导入 settings.py （from proj import settings）
-	问：执行 python3 views.py 会报错
-	答：因为views.py的同级别路径下是没有proj这个路径的
+    问：执行 python3 views.py 会报错
+    答：因为views.py的同级别路径下是没有proj这个路径的
 
-	注：如果我想实现直接执行 python3 views.py，并且导入settings
-	import sys
-	sys.path.append('/Users/caolingjun/PycharmProjects/untitled/python/ATM练习题/mypackage')
-	这种情况：from proj import settings
+    注：如果我想实现直接执行 python3 views.py，并且导入settings
+    import sys
+    sys.path.append('/Users/caolingjun/PycharmProjects/untitled/python/ATM练习题/mypackage')
+    这种情况：from proj import settings
 
     sys.path.append('/Users/caolingjun/PycharmProjects/untitled/python/ATM练习题/mypackage/proj')
     这种情况，则直接：import settings
 
 
 4). 上面的情况属于把绝对路径添加到了sys.path，下面考虑下把相对路径添加到sys.path，实现动态添加路径
-	在pycharm里面执行：
-	import sys
+    在pycharm里面执行：
+    import sys
     print(dir())
     会打印出：
     ['__annotations__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'sys']
@@ -61,20 +61,20 @@
 
     但是只往上返回了一层，要实现往上返回两层，则再嵌套一层
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-	print(BASE_DIR)
-	打印：
-	/Users/caolingjun/PycharmProjects/untitled/python/mypackage
+    print(BASE_DIR)
+    打印：
+    /Users/caolingjun/PycharmProjects/untitled/python/mypackage
 
-	最后，把变量BASE_DIR添加到sys.path
-	sys.path.append(BASE_DIR)
+    最后，把变量BASE_DIR添加到sys.path
+    sys.path.append(BASE_DIR)
 
 
 
 5). 但是在命令行的时候，print(__file__)打印的是相对路径，不是绝对路径
-	在命令行获取绝对路径的方法是：
-	print(os.path.abspath(__file__))
-	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-	sys.path.append(BASE_DIR)
+    在命令行获取绝对路径的方法是：
+    print(os.path.abspath(__file__))
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.append(BASE_DIR)
 
 
 6). 在 views.py 内导入 models （import models）
@@ -84,31 +84,32 @@
 
 
 7). 上面的这种写法略显麻烦，是否可以和Linux返回上一层一样，直接用.或者..来表示（.表示当前路径，..表示上一层路径）
-	上面的写法可以替换为：
-	from . import models
-	解析：因为是在views.py里导入，所以当前路径就是在crm下
-	注意：执行的命令还是python3 manage.py
+    上面的写法可以替换为：
+    from . import models
+    解析：因为是在views.py里导入，所以当前路径就是在crm下
+    注意：执行的命令还是python3 manage.py
 
 
 8). 在views.py 内导入 settings模块
-	from ..proj import settings
-	解析：因为是在views.py里导入，当前路径是crm/，上一层路径是mypackage/，而settings模块所在路径proj
-	正好是在mypackage/下
-	要注意的是，这里虽然一切都能解释清楚，但是却报错了：
-	ValueError:attempted relative import beyond top-level package
+    from ..proj import settings
+    解析：因为是在views.py里导入，当前路径是crm/，上一层路径是mypackage/，而settings模块所在路径proj
+    正好是在mypackage/下
+    要注意的是，这里虽然一切都能解释清楚，但是却报错了：
+    ValueError:attempted relative import beyond top-level package
 
+    在相对导入时，通常会遇到两种报错：
+    SystemError:Parent module '' not loaded,cannot perform relative import
+    ValueError:attempted relative import beyond top-level package
+    其实这两个错误的原因归根结底都是一样的：在涉及到相对导入时，package所对应的文件夹必须正确的被python解释器视作package，而不是普通文件夹。否则由于不被视作package，无法利用package之间的嵌套关系实现python中包的相对导入。
 
-	在相对导入时，通常会遇到两种报错：
-	SystemError:Parent module '' not loaded,cannot perform relative import
-	ValueError:attempted relative import beyond top-level package
-	其实这两个错误的原因归根结底都是一样的：在涉及到相对导入时，package所对应的文件夹必须正确的被python解释器视作package，而不是普通文件夹。否则由于不被视作package，无法利用package之间的嵌套关系实现python中包的相对导入。
+    文件夹被Python解释器视作package需要满足两个条件：
+    1. 文件夹中必须有__init__.py文件，文件可以为空，但必须存在该文件
+    2. 不能作为顶层模块来执行该文件夹中的py文件（即不能作为主函数的入口）
 
-	文件夹被Python解释器视作package需要满足两个条件：
-	1. 文件夹中必须有__init__.py文件，文件可以为空，但必须存在该文件
-	2. 不能作为顶层模块来执行该文件夹中的py文件（即不能作为主函数的入口）
+    所以总结下，上面出错的原因是：
+    当在views.py所在路径下往上返回2层就来到了mypackage/这一级别，而我们的程序主入口manage.py就是在mypackage/路径下。
+    解决的办法：把views.py往下拉一层，或者把manage.py往上拉一层
 
-	所以总结下，上面出错的原因是：
-	当在views.py所在路径下往上返回2层就来到了mypackage/这一级别，而我们的程序主入口manage.py就是在mypackage/路径下
 
 
 说在最后：跨模块导入的时候需要需要确定的是：
